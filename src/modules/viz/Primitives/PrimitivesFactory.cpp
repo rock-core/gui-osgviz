@@ -262,24 +262,29 @@ namespace osgviz {
     }
 
 
-    osg::ref_ptr<Object> PrimitivesFactory::loadImage(std::string path){
+    osg::ref_ptr<Object> PrimitivesFactory::loadImage(std::string path, int sizex, int sizey){
         osg::ref_ptr<Object> imageobject = new Object();
         osg::ref_ptr<osg::Texture2D> texture = new osg::Texture2D;
         osg::ref_ptr<osg::Geode> textureHolder = new osg::Geode();
-        texture->setDataVariance(osg::Object::DYNAMIC);
+        //texture->setDataVariance(osg::Object::DYNAMIC);
         osg::Image* image = osgDB::readImageFile(path);
         texture->setImage(image);
-
+        if (sizex == 0) {
+            sizex = image->s();
+        }
+        if (sizey == 0) {
+            sizey = image->t();
+        }
 
         osg::ref_ptr<osg::Geometry> imageQuad = osg::createTexturedQuadGeometry(osg::Vec3(0.0f,0.0f,0.0f),
-            osg::Vec3(image->s(),0.0f,0.0f),
-            osg::Vec3(0.0f,image->t(),0.0f),
+            osg::Vec3(sizex,0.0f,0.0f),
+            osg::Vec3(0.0f,sizey,0.0f),
             0.0f,
             0.0f,
             1.0f,
             1.0f);
         imageQuad->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture.get());
-        imageQuad->getOrCreateStateSet()->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);
+        //imageQuad->getOrCreateStateSet()->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);
         textureHolder->addDrawable(imageQuad);
         imageobject->addChild(textureHolder);
 

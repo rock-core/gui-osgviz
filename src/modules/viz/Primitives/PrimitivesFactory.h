@@ -81,7 +81,7 @@ namespace osgviz {
         virtual osg::ref_ptr<BoundingBox> createBoundingBox(osg::Group* object);
 
 
-        virtual osg::ref_ptr<Object> loadImage(std::string path);
+        virtual osg::ref_ptr<Object> loadImage(std::string path, int sizex = 0, int sizey = 0);
 
     };
 

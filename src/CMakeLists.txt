@@ -99,6 +99,7 @@ rock_library(osgViz
            tools/GraphPrinter.h
            tools/SearchNodes.h
            tools/GlobalPos.h
+           tools/GraphEditor.h
                
     LIBS ${ADDITIONAL_LIBS}
     DEPS osgVizGraphics 
