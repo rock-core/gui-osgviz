@@ -171,7 +171,7 @@ int main(int argc, char** argv)
     lodnode->addChild(lodaxes, 10, FLT_MAX);
 
     // osg::ref_ptr<osgviz::Object> lodimage = primitivesfactory->loadImage("test.png",1,1);
-    // lodimage->setPosition(-0.5,-0.5,0);
+    // lodimage->setPosition(0.5,0.5,0);
     // lodimage->rotate(M_PI, osg::Vec3d(0,0,1));
     // lodnode->addChild(lodimage, 10, FLT_MAX);
 

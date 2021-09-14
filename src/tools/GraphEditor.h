@@ -15,7 +15,7 @@ class GraphEditor {
      * @param oldnode 
      * @param newparent 
      */
-    template <class C> static void insertNode(osg::Node* oldnode, osg::ref_ptr<C> newparent) {
+    static void insertNode(osg::ref_ptr<osg::Node> oldnode, osg::ref_ptr<osg::Group> newparent) {
         // remove oldnode add newparent to all parents
         for (osg::Group *node : oldnode->getParents()) {
             node->removeChild(oldnode);
