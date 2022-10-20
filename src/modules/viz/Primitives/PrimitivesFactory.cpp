@@ -126,7 +126,7 @@ namespace osgviz {
         return node;
     }
 
-    osg::ref_ptr<Object> PrimitivesFactory::createLinesNode(osg::Vec4 color, const std::vector<osg::Vec3>& points)
+    osg::ref_ptr<Object> PrimitivesFactory::createLinesNode(osg::Vec4 color, const std::vector<osg::Vec3>& points, const int &linewidht)
     {
         LinesNode* node = new LinesNode(color);
         node->setName("Lines");
@@ -134,7 +134,7 @@ namespace osgviz {
         {
             for(size_t i = 0; i < points.size() - 1; ++i)
             {
-                node->addLine(points[i], points[i + 1]);
+                node->addLine(points[i], points[i + 1], linewidht);
             }
         }
         return  osg::ref_ptr<Object>(node);    
