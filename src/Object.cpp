@@ -94,12 +94,12 @@ namespace osgviz {
     bool Object::clicked(const int &buttonMask, const osg::Vec2d &cursor, const osg::Vec3d &world,
         const osg::Vec3d &local, Clickable *object, const int modKeyMask,
         WindowInterface* window){
-            printf("%s click world: %.2f,%.2f,%.2f local: %.2f,%.2f,%.2f \n",this->getName().c_str(),world.x(),world.y(),world.z(),local.x(),local.y(),local.z());
+            // printf("%s click: %.2f,%.2f,%.2f local: %.2f,%.2f,%.2f \n",this->getName().c_str(),world.x(),world.y(),world.z(),local.x(),local.y(),local.z());
             bool finish = false;
             if (!clickablecb.empty()){
                 for(std::shared_ptr<Clickable>& clickable : clickablecb) {
                     if (clickable->clicked(buttonMask,cursor,world,local, this, modKeyMask, window)){
-                        printf("%s forwarded click\n",this->getName().c_str());
+                        // printf("%s forwarded click\n",this->getName().c_str());
                         finish = true;
                     }
                 }
