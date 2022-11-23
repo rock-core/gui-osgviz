@@ -94,7 +94,9 @@ namespace osgviz {
             root->removeChild(0,root->getNumChildren());
         }
 
-
+        inline osg::ref_ptr<osg::GraphicsContext> getGraphicsContext(){
+            return graphicsContext;
+        }
 
     protected:
         osg::ref_ptr<osg::Group> root;
