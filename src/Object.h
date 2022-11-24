@@ -56,6 +56,14 @@ namespace osgviz {
         */
         bool hasClickableCallback(std::shared_ptr<Clickable> cb);
 
+        int getClickableCallbackNumber() {
+            return clickablecb.size();
+        }
+
+        void removeAllCallbacks() {
+            clickablecb.clear();
+        }
+
         inline void setScale(const float &x, const float &y, const float &z){
             PositionAttitudeTransform::setScale(osg::Vec3d(x,y,z));
         }
