@@ -121,8 +121,6 @@ public:
 				foundNodes.push_back(node);
 			}
 
-			osg::Group * group = dynamic_cast< osg::Group * >(node);
-
 			expand(node,knownNodes,nodes,addParents);
 
 			nodes.pop_front();
