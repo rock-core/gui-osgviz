@@ -159,7 +159,7 @@ namespace osgviz
             try {
                 Module<MOD>& mod = dynamic_cast< Module<MOD>& > (*base);
                 return mod.module;
-            } catch (std::bad_cast e) {
+            } catch (std::bad_cast const& e) {
                 std::string message = " there is no module '" +
                     moduleName + "' of type '" +
 #if(WIN32)

@@ -63,7 +63,7 @@ int main(int argc, char** argv)
 
     osgviz::OsgViz::printModules();
 
-    printf("PF \n\t%p \n\t%p\n\t%p\n",primitivesfactory.get(),primitivesfactory2.get(),primitivesfactory3.get());
+    printf("PF \n\t%p \n\t%p\n\t%p\n", primitivesfactory.get(), primitivesfactory2.get(), primitivesfactory3.get());
 
     if (!primitivesfactory){
         printf("plugin not found\n");	fflush(stdout);
