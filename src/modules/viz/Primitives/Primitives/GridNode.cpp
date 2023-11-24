@@ -1,3 +1,6 @@
+// have this on top so it is used for all included headers
+#define _USE_MATH_DEFINES
+
 #include "GridNode.hpp"
 
 #include <sstream>
@@ -6,7 +9,6 @@
 #include <osg/Point>
 #include <osgText/Text>
 
-#define _USE_MATH_DEFINES
 #include <math.h>
 
 namespace osgviz

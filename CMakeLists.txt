@@ -8,7 +8,12 @@ if(MSVC)
     set(CMAKE_GENERATOR_TOOLSET "v120_CTP_Nov2012" CACHE STRING "Platform Toolset" FORCE) 
     set(CMAKE_VS_PLATFORM_TOOLSET "v120_CTP_Nov2012" CACHE STRING "Platform Toolset" FORCE) 
 else()
-    rock_activate_cxx11()
+    #rock_activate_cxx11()
 endif()
+
+if (MSYS)
+    ADD_DEFINITIONS(-DWIN32)
+endif(MSYS)
+
 
 rock_standard_layout()
