@@ -41,6 +41,8 @@ namespace osgviz {
         /** Enabled/disable the handler */
         void setEnabled(const bool value);
 
+        void resetClickedObject();
+
         /**This signal is emitted once the movement is complete.
         * I.e. the user has clicked the object, dragged it and released it.
         * @param motion the final motion of the object relative to the original object
