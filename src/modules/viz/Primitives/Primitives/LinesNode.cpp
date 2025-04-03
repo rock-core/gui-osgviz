@@ -1,5 +1,6 @@
 #include "LinesNode.h"
 #include <osg/PrimitiveSet>
+#include <osg/LineWidth>
 using namespace osg;
 namespace osgviz
 {
@@ -16,11 +17,16 @@ namespace osgviz
         addChild(geode);
     }
 
-    void LinesNode::addLine(const Vec3& start, const Vec3& end)
+    void LinesNode::addLine(const Vec3& start, const Vec3& end, const int &linewidht)
     {
         vertices->push_back(start);
         vertices->push_back(end);
         geom->addPrimitiveSet(new osg::DrawArrays(GL_LINES, vertices->size()-2, 2));
+        osg::StateSet* state = geom->getOrCreateStateSet();
+        osg::LineWidth* lw = new osg::LineWidth;
+        lw->setWidth(linewidht);
+        state->setAttribute(lw, osg::StateAttribute::ON);
+        state->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
     }
 
 }

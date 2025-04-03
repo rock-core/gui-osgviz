@@ -8,6 +8,7 @@
 #include "PrimitivesFactory.h"
 
 #include "Primitives/ArrowNode.h"
+#include "Primitives/CircularArrowNode.h"
 #include "Primitives/AxesNode.hpp"
 #include "Primitives/GridNode.hpp"
 #include "Primitives/WireframeBox.hpp"
@@ -96,9 +97,6 @@ namespace osgviz {
         return box;  
     }
 
-
-
-
     osg::ref_ptr<Object> PrimitivesFactory::createGrid(int rows,int cols,float dx, float dy, bool show_coordinates, const ::osg::Vec4 &color){
         osg::ref_ptr<Object> obj = new Object();
         osg::ref_ptr<osg::Node> content = GridNode::create(rows,cols,dx, dy, show_coordinates, color);
@@ -114,6 +112,13 @@ namespace osgviz {
         return node;
     }
 
+    osg::ref_ptr<Object> PrimitivesFactory::createCircularArrow(float radius, float tube, unsigned int radialSegments, unsigned int tubularSegments, float arc, float animationTimeSec, const osg::Vec4& color) {
+        osg::ref_ptr<CircularArrowNode> node = new CircularArrowNode(radius, tube, radialSegments, tubularSegments, arc, animationTimeSec);
+        node->setName("CircularArrow");
+        node->setColor(color);
+        return node;
+    }
+
     osg::ref_ptr<Object> PrimitivesFactory::createLinesNode(osg::Vec4 color)
     {
         osg::ref_ptr<Object> node = new LinesNode(color);
@@ -121,7 +126,7 @@ namespace osgviz {
         return node;
     }
 
-    osg::ref_ptr<Object> PrimitivesFactory::createLinesNode(osg::Vec4 color, const std::vector<osg::Vec3>& points)
+    osg::ref_ptr<Object> PrimitivesFactory::createLinesNode(osg::Vec4 color, const std::vector<osg::Vec3>& points, const int &linewidht)
     {
         LinesNode* node = new LinesNode(color);
         node->setName("Lines");
@@ -129,7 +134,7 @@ namespace osgviz {
         {
             for(size_t i = 0; i < points.size() - 1; ++i)
             {
-                node->addLine(points[i], points[i + 1]);
+                node->addLine(points[i], points[i + 1], linewidht);
             }
         }
         return  osg::ref_ptr<Object>(node);    
@@ -257,24 +262,29 @@ namespace osgviz {
     }
 
 
-    osg::ref_ptr<Object> PrimitivesFactory::loadImage(std::string path){
+    osg::ref_ptr<Object> PrimitivesFactory::loadImage(std::string path, int sizex, int sizey){
         osg::ref_ptr<Object> imageobject = new Object();
         osg::ref_ptr<osg::Texture2D> texture = new osg::Texture2D;
         osg::ref_ptr<osg::Geode> textureHolder = new osg::Geode();
-        texture->setDataVariance(osg::Object::DYNAMIC);
+        //texture->setDataVariance(osg::Object::DYNAMIC);
         osg::Image* image = osgDB::readImageFile(path);
         texture->setImage(image);
-
+        if (sizex == 0) {
+            sizex = image->s();
+        }
+        if (sizey == 0) {
+            sizey = image->t();
+        }
 
         osg::ref_ptr<osg::Geometry> imageQuad = osg::createTexturedQuadGeometry(osg::Vec3(0.0f,0.0f,0.0f),
-            osg::Vec3(image->s(),0.0f,0.0f),
-            osg::Vec3(0.0f,image->t(),0.0f),
+            osg::Vec3(sizex,0.0f,0.0f),
+            osg::Vec3(0.0f,sizey,0.0f),
             0.0f,
             0.0f,
             1.0f,
             1.0f);
         imageQuad->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture.get());
-        imageQuad->getOrCreateStateSet()->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);
+        //imageQuad->getOrCreateStateSet()->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);
         textureHolder->addDrawable(imageQuad);
         imageobject->addChild(textureHolder);
 

@@ -29,12 +29,13 @@ namespace osgviz {
         virtual osg::ref_ptr<Object> createTextNode(const std::string& text, double fontSize, osg::Vec4 color = osg::Vec4(1, 1, 1, 1));
         virtual osg::ref_ptr<Object> createGrid(int rows = 20,int cols = 20,float dx =1, float dy=1, bool show_coordinates=false, const ::osg::Vec4 &color = ::osg::Vec4(120,120,120,255));
         virtual osg::ref_ptr<Object> createArrow(osg::Vec4 color = osg::Vec4(1, 1, 1, 1), bool invert = false);
+        virtual osg::ref_ptr<Object> createCircularArrow(float radius = 1.0, float tube = 0.4, unsigned int radialSegments = 12, unsigned int tubularSegments = 32, float arc = 2.0*M_PI, float animationTimeSec = 2.0, const osg::Vec4& color = {1.0, 1.0, 0.0, 1.0});
         virtual osg::ref_ptr<Object> createWireframeBox(const double xSize, const double ySize, const double zSize, osg::Vec4 color = osg::Vec4(1, 1, 1, 1)) const;
         virtual osg::ref_ptr<Object> createWireframeBox(const double xSize, const double ySize, const double zSize,
             const double centerX, const double centerY, const double centerZ,
             osg::Vec4 color = osg::Vec4(1, 1, 1, 1)) const;
         virtual osg::ref_ptr<Object> createLinesNode(osg::Vec4 color = osg::Vec4(1, 1, 1, 1));
-        virtual osg::ref_ptr<Object> createLinesNode(osg::Vec4 color, const std::vector<osg::Vec3>& points);
+        virtual osg::ref_ptr<Object> createLinesNode(osg::Vec4 color, const std::vector<osg::Vec3>& points, const int &linewidht = 1);
         virtual osg::ref_ptr<Object> createRingNode(const float radius, const float height, const float thickness, osg::Vec4 color = osg::Vec4(1, 1, 1, 1));
         virtual osg::ref_ptr<Object> createSphereNode(double x, double y, double z, double radius, osg::Vec4 color = osg::Vec4(1, 1, 1, 1));
         virtual osg::ref_ptr<Object> createGraph2D(double x, double y, double z,osg::Quat orient,double width, double height);
@@ -80,7 +81,7 @@ namespace osgviz {
         virtual osg::ref_ptr<BoundingBox> createBoundingBox(osg::Group* object);
 
 
-        virtual osg::ref_ptr<Object> loadImage(std::string path);
+        virtual osg::ref_ptr<Object> loadImage(std::string path, int sizex = 0, int sizey = 0);
 
     };
 

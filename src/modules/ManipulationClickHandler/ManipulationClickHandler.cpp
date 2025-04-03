@@ -129,6 +129,8 @@ namespace osgviz {
         return handler.receive(command);
     }
 
-
+    void ManipulationClickHandler::resetClickedObject() {
+        clickedObject = NULL;
+    }
 
 }

@@ -99,6 +99,7 @@ rock_library(osgViz
            tools/GraphPrinter.h
            tools/SearchNodes.h
            tools/GlobalPos.h
+           tools/GraphEditor.h
                
     LIBS ${ADDITIONAL_LIBS}
     DEPS osgVizGraphics 
@@ -111,6 +112,7 @@ rock_library(PrimitivesFactory
     modules/viz/Primitives/Primitives/AxesNode.cpp
     modules/viz/Primitives/Primitives/GridNode.cpp
     modules/viz/Primitives/Primitives/ArrowNode.cpp
+    modules/viz/Primitives/Primitives/CircularArrowNode.cpp
     modules/viz/Primitives/Primitives/WireframeBox.cpp
     modules/viz/Primitives/Primitives/LinesNode.cpp
     modules/viz/Primitives/Primitives/RingNode.cpp
@@ -121,6 +123,7 @@ rock_library(PrimitivesFactory
     HEADERS
     modules/viz/Primitives/PrimitivesFactory.h
     modules/viz/Primitives/Primitives/ArrowNode.h
+    modules/viz/Primitives/Primitives/CircularArrowNode.h
     modules/viz/Primitives/Primitives/WireframeBox.hpp
     modules/viz/Primitives/Primitives/LinesNode.h
     modules/viz/Primitives/Primitives/RingNode.hpp

@@ -112,13 +112,13 @@ namespace osgviz {
             graphicData.clearColor = osgviz::Color(0.55, 0.67, 0.88, 1.0);
 
             // setup FOG
-            graphicData.fogColor = osgviz::Color(0.2, 0.2, 0.2, 1.0);
-            graphicData.fogEnabled = true;
-            graphicData.fogDensity = 0.35;
-            graphicData.fogStart = 10.0;
-            graphicData.fogEnd = 300.0;
+            // graphicData.fogColor = osgviz::Color(0.2, 0.2, 0.2, 1.0);
+            // graphicData.fogEnabled = true;
+            // graphicData.fogDensity = 0.35;
+            // graphicData.fogStart = 10.0;
+            // graphicData.fogEnd = 300.0;
 
-            setFogSettings(graphicData);    
+            // setFogSettings(graphicData);    
 
             // Event Handler Factory
             addEventHandler(new osgViewer::StatsHandler(),-100);

@@ -1,8 +1,12 @@
-#include <iostream>
 #include "OsgViz.hpp"
+
+#include <osg/LOD>
+#include <osgUtil/Simplifier>
+#include <iostream>
+
 #include "modules/viz/Primitives/PrimitivesFactory.h"
 #include "modules/viz/ModelLoader/ModelLoader.h"
-
+#include "tools/GraphEditor.h"
 
 #ifndef WIN32
 #include <unistd.h>//sleep
@@ -41,7 +45,7 @@ int main(int argc, char** argv)
     osg::ref_ptr<osgviz::OsgViz> osgViz = osgviz::OsgViz::getInstance();
 
     //load lib with some helpful primitives
-    printf("load plugin\n");	fflush(stdout);
+    printf("load modules\n");	fflush(stdout);
     //osgviz::PrimitivesFactory *primitivesfactory = new osgviz::PrimitivesFactory(NULL);
     std::shared_ptr<osgviz::PrimitivesFactory> primitivesfactory = osgviz::OsgViz::getModuleInstance<osgviz::PrimitivesFactory>("PrimitivesFactory");
 
@@ -95,10 +99,10 @@ int main(int argc, char** argv)
 
     osg::ref_ptr<osgviz::HUD> hud = window->addHUD(1920,1080,osg::Camera::ProjectionResizePolicy::FIXED);
 
-    //osg::ref_ptr<osgviz::Object> hudarrow = primitivesfactory->createArrow();
-    //hudarrow->setPosition(100,100,0);
-    //hudarrow->setScale(200,200,200);
-    //hud->addHudObject(hudarrow);
+    osg::ref_ptr<osgviz::Object> hudarrow = primitivesfactory->createArrow();
+    hudarrow->setPosition(100,100,0);
+    hudarrow->setScale(200,200,200);
+    hud->addHudObject(hudarrow);
 
 
     osg::ref_ptr<osg::Geode> geode = new osg::Geode();
@@ -155,10 +159,28 @@ int main(int argc, char** argv)
     hud2->addHudObject(cone);
 
 
-    //osg::ref_ptr<osgviz::Object> image = primitivesfactory->loadImage("test.png");
-    ////shape1->setPosition(0.5,0.5,0.5);
-    //image->setPosition(1000,500,0);
-    //hud->addHudObject(image);
+    // add a lod node
+    osg::ref_ptr<osg::LOD> lodnode = new osg::LOD();
+    lodnode->setRangeMode(osg::LOD::DISTANCE_FROM_EYE_POINT);
+    GraphEditor::insertNode(arrow, lodnode);
+    // set range for the moved child
+    lodnode->setRange(0, 0, 10);
+
+    osg::ref_ptr<osgviz::Object> lodaxes = primitivesfactory->createAxes();
+    lodaxes->setPosition(-1,0,0);
+    lodnode->addChild(lodaxes, 10, FLT_MAX);
+
+    // osg::ref_ptr<osgviz::Object> lodimage = primitivesfactory->loadImage("test.png",1,1);
+    // lodimage->setPosition(0.5,0.5,0);
+    // lodimage->rotate(M_PI, osg::Vec3d(0,0,1));
+    // lodnode->addChild(lodimage, 10, FLT_MAX);
+
+    osg::ref_ptr<osg::Node> lowres = dynamic_cast<osg::Node*>(arrow->clone(osg::CopyOp::DEEP_COPY_ALL));
+    osgUtil::Simplifier simplifer;
+    simplifer.setSampleRatio(0.5);
+    lowres->accept(simplifer);
+    lodnode->addChild(lowres, 12, FLT_MAX);
+
 
     //sleep(1);
     //you can create multiple windows and views ones:

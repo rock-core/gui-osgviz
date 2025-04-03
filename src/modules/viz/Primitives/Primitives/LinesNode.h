@@ -10,7 +10,7 @@ namespace osgviz
     {
     public:
         LinesNode(const osg::Vec4& rgbaColor);
-        void addLine(const osg::Vec3& start, const osg::Vec3& end);
+        void addLine(const osg::Vec3& start, const osg::Vec3& end, const int &linewidht = 1);
     protected:
         osg::ref_ptr<osg::Vec4Array> colors;
         osg::ref_ptr<osg::Vec3Array> vertices;
