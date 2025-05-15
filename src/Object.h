@@ -113,6 +113,8 @@ namespace osgviz {
         void switchCullMask();
         void xorCullMask(unsigned int mask);
 
+        void setLineWidth(const double& width);
+
         void displayName(const float &font_size = 0.1f, const osg::Vec3 &pos = osg::Vec3(0,0,0), const osg::Vec4 &color = osg::Vec4(0,0,0,1));
 
         void setTextSize(float font_size);

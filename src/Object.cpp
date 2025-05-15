@@ -13,6 +13,7 @@
 //#include <unistd.h>
 
 #include <osg/ValueObject>
+#include <osg/LineWidth>
 #include <algorithm>
 
 namespace osgviz {
@@ -90,6 +91,11 @@ namespace osgviz {
         }
     }
 
+    void Object::setLineWidth(const double& width) {
+        osg::ref_ptr<osg::LineWidth> linewidth = new osg::LineWidth();
+        linewidth->setWidth(width);
+        this->getOrCreateStateSet()->setAttributeAndModes(linewidth, osg::StateAttribute::ON);
+    }
 
     bool Object::clicked(const int &buttonMask, const osg::Vec2d &cursor, const osg::Vec3d &world,
         const osg::Vec3d &local, Clickable *object, const int modKeyMask,
