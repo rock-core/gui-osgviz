@@ -32,7 +32,7 @@ namespace osgviz {
     void HierarchicalEventHandler::removeEventHandler(osg::ref_ptr<osgGA::GUIEventHandler> handlerToRemove) {
 
         for (std::map<int, osg::ref_ptr<osgGA::GUIEventHandler> >::iterator handler = handlers.begin(); handler != handlers.end();++handler){
-            if (handler->second == handlerToRemove){
+            if (handler->second.get() == handlerToRemove.get()){
                 handlers.erase(handler);
                 break;
             }

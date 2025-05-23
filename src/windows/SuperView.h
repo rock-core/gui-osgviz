@@ -125,6 +125,10 @@ namespace osgviz {
             objectSelectorEvent->setCamera(cam);
         }
 
+        osg::ref_ptr<osgViewer::StatsHandler> getStatsHandler() {
+            return statsHandler;
+        }
+
     private:
         ViewConfig viewConfig;
 
@@ -154,11 +158,10 @@ namespace osgviz {
 
         std::vector < osg::ref_ptr<osgviz::HUD> > huds;
 
-
+        osg::ref_ptr<osgViewer::StatsHandler> statsHandler;
         osg::ref_ptr<MouseMoveEvent> mouseMoveEvent;
         osg::ref_ptr<ObjectSelector> objectSelectorEvent;
         osg::ref_ptr<WindowResizeEvent> windowResizeEvent;
-
 
         void initDefaultLight();
     };

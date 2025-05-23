@@ -121,7 +121,8 @@ namespace osgviz {
             // setFogSettings(graphicData);    
 
             // Event Handler Factory
-            addEventHandler(new osgViewer::StatsHandler(),-100);
+            statsHandler = new osgViewer::StatsHandler();
+            addEventHandler(statsHandler,-100);
 
             objectSelectorEvent = new ObjectSelector(this);
             addEventHandler(objectSelectorEvent,10);
