@@ -21,7 +21,7 @@ namespace osgviz {
  
         float arrowheight = 1;
         float cylinderheight = arrowheight - coneheight;
-        float cylinderposz = -0.5*cylinderheight;
+        float cylinderposz = -0.5*cylinderheight - coneheight;
 
         if (invert == true)
         {
