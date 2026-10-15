@@ -20,6 +20,11 @@ namespace osgviz
      *
      * TerrainManipulator::intersect is not virtual, so all methods that use
      * it (setByMatrix, setTransformation and panning) are reimplemented here.
+     *
+     * To keep panning responsive on large clouds, the center is not snapped
+     * while dragging. Instead it is moved along the current view ray onto the
+     * scene once the mouse button is released (or, if the pan was thrown,
+     * on the next mouse button press), which does not move the camera.
      */
     class PointCloudManipulator : public osgGA::TerrainManipulator
     {
@@ -35,7 +40,13 @@ namespace osgviz
         double getPickTolerance() const;
 
     protected:
+        virtual bool handleMousePush(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us) override;
+        virtual bool handleMouseRelease(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us) override;
         virtual bool performMovementMiddleMouseButton(const double eventTimeDelta, const double dx, const double dy) override;
+
+        /** Moves the center onto the scene along the current view ray, if it
+         * was panned since the last update */
+        void updateCenter();
 
         /** Intersects the segment with triangles and points of the scene
          *
@@ -47,6 +58,7 @@ namespace osgviz
 
     private:
         double pickTolerance;
+        bool centerOutdated;
     };
 }
 

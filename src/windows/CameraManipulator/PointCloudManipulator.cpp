@@ -12,6 +12,7 @@ using namespace osgviz;
 PointCloudManipulator::PointCloudManipulator(int flags)
     : osgGA::TerrainManipulator(flags)
     , pickTolerance(0.01)
+    , centerOutdated(false)
 {
 }
 
@@ -130,6 +131,30 @@ void PointCloudManipulator::setTransformation(const osg::Vec3d& eye, const osg::
     clampOrientation();
 }
 
+void PointCloudManipulator::updateCenter()
+{
+    if (!centerOutdated)
+        return;
+    centerOutdated = false;
+    // re-intersects along the view ray, the camera itself stays where it is
+    setByMatrix(getMatrix());
+}
+
+bool PointCloudManipulator::handleMousePush(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)
+{
+    // a thrown pan is still moving the center until the next push
+    updateCenter();
+    return osgGA::TerrainManipulator::handleMousePush(ea, us);
+}
+
+bool PointCloudManipulator::handleMouseRelease(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)
+{
+    const bool handled = osgGA::TerrainManipulator::handleMouseRelease(ea, us);
+    if (!_thrown)
+        updateCenter();
+    return handled;
+}
+
 bool PointCloudManipulator::performMovementMiddleMouseButton(const double eventTimeDelta, const double dx, const double dy)
 {
     // pan within the plane perpendicular to the local up vector (as TerrainManipulator)
@@ -142,21 +167,8 @@ bool PointCloudManipulator::performMovementMiddleMouseButton(const double eventT
     sideVector.normalize();
     _center += forwardVector * (dy * scale) + sideVector * (dx * scale);
 
-    if (!_node.valid())
-        return true;
-
-    // move the center up or down onto the closest surface or point
-    const osg::Vec3d up = getUpVector(getCoordinateFrame(_center));
-    const double range = _node->getBound().radius() * 0.25;
-    osg::Vec3d above, below;
-    const bool hitAbove = intersectScene(_center, _center + up * range, above);
-    const bool hitBelow = intersectScene(_center, _center - up * range, below);
-    if (hitAbove && hitBelow)
-        _center = ((above - _center).length2() < (below - _center).length2()) ? above : below;
-    else if (hitAbove)
-        _center = above;
-    else if (hitBelow)
-        _center = below;
+    // intersecting is expensive on large clouds, snap the center once the drag is done
+    centerOutdated = true;
 
     // keep the view consistent if the up vector changed (e.g. on a globe)
     const osg::Vec3d newUp = getUpVector(getCoordinateFrame(_center));
