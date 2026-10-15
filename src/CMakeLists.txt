@@ -75,6 +75,7 @@ rock_library(osgViz
            windows/EventHandlers/MouseMoveEvent.cpp
            windows/EventHandlers/WindowResizeEvent.cpp
            windows/CameraManipulator/TerrainZoomManipulator.cpp
+           windows/CameraManipulator/PointCloudManipulator.cpp
            tools/UpdateThread.cpp    
            
     HEADERS OsgViz.hpp
@@ -93,6 +94,7 @@ rock_library(osgViz
            windows/EventHandlers/WindowResizeEvent.h
            windows/config/WindowConfig.h
            windows/CameraManipulator/TerrainZoomManipulator.hpp
+           windows/CameraManipulator/PointCloudManipulator.hpp
            tools/UpdateThread.h
            tools/Timing.h
            tools/TypeNameDemangling.h
